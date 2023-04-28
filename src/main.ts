@@ -1,24 +1,34 @@
 import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import { keys } from './keys'
+
+let keys_btn: NodeListOf<Element> = [] as unknown as NodeListOf<Element>;
+let lang: 'en'|'ru'|'enShift'|'ruShift'|'enCaps'|'ruCaps'|'enCapsShift' = 'en';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+  <textarea class="text" name="story" rows="5" cols="33"></textarea>
+  <div id="keyboard"></div>
+`;
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+const renderKeyboard = (type: 'en'|'ru'|'enShift'|'ruShift'|'enCaps'|'ruCaps'|'enCapsShift') => {
+  document.querySelector<HTMLDivElement>('#keyboard')!.innerHTML = `
+    <div class="keyboard_wrapp">
+      <div class="row">
+        ${keys[0].map((key) => `<div class="${key['class']}" keyname="${key['keyname']}">${key[type]}</div>`).join('')}
+      </div>
+      <div class="row">
+        ${keys[1].map((key) => `<div class="${key['class']}" keyname="${key['keyname']}">${key[type]}</div>`).join('')}
+      </div>
+      <div class="row">
+        ${keys[2].map((key) => `<div class="${key['class']}" keyname="${key['keyname']}">${key[type]}</div>`).join('')}
+      </div>
+      <div class="row">
+        ${keys[3].map((key) => `<div class="${key['class']}" keyname="${key['keyname']}">${key[type]}</div>`).join('')}
+      </div>
+      <div class="row">
+        ${keys[4].map((key) => `<div class="${key['class']}" keyname="${key['keyname']}">${key[type]}</div>`).join('')}
+      </div>
+    </div>
+  `;
+};
+
+renderKeyboard('en');
