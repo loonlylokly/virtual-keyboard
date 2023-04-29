@@ -71,3 +71,46 @@ h1 {
   z-index: 5;
   user-select: none;
 }
+
+.tab {
+  flex-grow: 5;
+}
+
+.slash {
+  flex-grow: 5;
+}
+
+.caps_lock {
+  flex-grow: 6;
+}
+
+.enter {
+  flex-grow: 6;
+}
+
+.shift_left, .shift_right {
+  flex-grow: 8;
+}
+
+.space {
+  max-width: 600px;
+  flex-grow: 16;
+}
+
+.active {
+  background-color: #333;
+  color: #fff;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
