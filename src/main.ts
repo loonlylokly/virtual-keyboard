@@ -40,12 +40,46 @@ const renderKeyboard = (type: 'en'|'ru'|'enShift'|'ruShift'|'enCaps'|'ruCaps'|'e
   caps_lock = document.querySelector('.caps_lock');
   input_text = document.querySelector('.text') as HTMLInputElement;
   if (caps) caps_lock?.classList.add('active');
+
+  keys_btn.forEach((key) => { 
+    let keyCode = key.getAttribute('keyname') as string;
+    if (keyCode == 'CapsLock1' || keyCode == 'ShiftLeft1') {
+      keyCode = keyCode.slice(0, -1);
+    }
+    key.addEventListener('mousedown', () => {
+      if (keyCode != 'ShiftLeft' && keyCode != 'CapsLock' && keyCode != 'Tab'
+          && keyCode != 'Backspace' && keyCode != 'Del'  && keyCode != 'ShiftRight'
+          && keyCode != 'ControlLeft' && keyCode != 'OSLeft' && keyCode != 'AltLeft'
+          && keyCode != 'Space' && keyCode != 'AltRight' && keyCode != 'ControlRight'
+          && keyCode != 'ArrowLeft' && keyCode != 'ArrowUp' && keyCode != 'ArrowDown' && keyCode != 'ArrowRight') {
+            input_text.value += key.textContent as string;
+      }
+      if (keyCode == 'Del') {
+        input_text.value = input_text.value.slice(0, -1);
+      }
+      if (keyCode == 'Space') {
+        input_text.value += ' ';
+      }
+      if (keyCode == 'Backspace') {
+        input_text.value = input_text.value.slice(0, -1);
+      }
+      const keydown = new KeyboardEvent("keydown", {bubbles : true, cancelable : true, code : keyCode});
+      key.dispatchEvent(keydown);
+      input_text?.focus();
+    });
+    key.addEventListener('mouseup', () => {
+      const keyup = new KeyboardEvent("keyup", {bubbles : true, cancelable : true, code : keyCode});
+      key.dispatchEvent(keyup)
+      input_text?.focus();
+    })
+  });
 };
 
 renderKeyboard('en');
 
 window.addEventListener('keydown', function(e) {
   input_text?.focus();
+  console.log(e.code);
   for(let i = 0; i < keys_btn.length; i++) {
     if(e.code === keys_btn[i].getAttribute('keyname') || e.key === keys_btn[i].getAttribute('lowerCaseName')) {
       keys_btn[i].classList.add('active');
